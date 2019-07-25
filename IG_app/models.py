@@ -9,6 +9,8 @@ class Image(models.Model):
     profile=models.ForeignKey(User,on_delete=models.CASCADE,related_name="images",blank=True)
     likes=models.IntegerField(default=0)
     comments=models.TextField()
+    tags=models.ManyToManyField(tags)
+    location=models.ForeignKey(Location,null=True)
     
     def __str__(self):
         return self.name
