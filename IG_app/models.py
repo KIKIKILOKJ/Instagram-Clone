@@ -14,6 +14,9 @@ class tags(models.Model):
     def delete_tags(self):
         self.delete()
 
+class Location(models.Model):
+    name=models.CharField(max_length=40)
+
 class Image(models.Model):
     image=models.ImageField(upload_to='/picture',)
     name=models.CharField(max_length=40)
