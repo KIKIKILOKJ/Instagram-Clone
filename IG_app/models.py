@@ -55,4 +55,24 @@ class Profile(models.Model):
     def delete_profile(self):
         self.delete()
         
-   
+    def follow_user(self,follower):
+        return self.following.add(follower)
+        
+    def is_following(self,check_user):
+        return check_user in self.following.all()
+    
+    def get_number_of_following(self):
+            if self.following.count():
+                return self.following.count()
+            else:
+                return 0
+            
+    def get_number_of_followers(self):
+        if self.followers.count():
+            return self.followers.count()
+        else:
+            return 0
+    
+    def unfollow_user(self,to_unfollow):
+        return self.following.remove(to_unfollow)
+    
