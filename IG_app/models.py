@@ -76,3 +76,7 @@ class Profile(models.Model):
     def unfollow_user(self,to_unfollow):
         return self.following.remove(to_unfollow)
     
+    @classmethod
+    def search_users(cls,search_term):
+        profiles=cls.objects.filter(user__username__icontains=search_term)
+        return profiles
