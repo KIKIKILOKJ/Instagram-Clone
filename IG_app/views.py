@@ -58,6 +58,14 @@ def edit_profile(request):
         form = UpdateBioForm()
     return render(request, 'edit_profile.html', {"form": form})
 
+def my_profile(request,username=None):
+    if not username:
+        username = request.user.username
+        images = Image.objects.filter(user_id=username)
+
+        return render(request, 'profile.html')
+                #locals())
+
 def personal_profile_page(request,username=None):
     if not username:
         username = request.user.username
