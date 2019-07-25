@@ -19,3 +19,17 @@ def index(request):
     else:
         form = NewsLetterForm()
     return render(request, 'index', {"location":location,"tags":tags,"images":images,"letterForm":form})
+
+def new_image(request):
+    current_user=request.user
+    if request.method == 'POST':
+        form = NewImageForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = current_user
+            image.save()
+        return redirect('index')
+
+    else:
+        form = NewImageForm()
+    return render(request, 'new_image.html', {"form": form})
