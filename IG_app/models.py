@@ -120,5 +120,3 @@ class Profile(models.Model):
         profiles=cls.objects.filter(user__username__icontains=search_term)
         return profiles
     
-    
-    
