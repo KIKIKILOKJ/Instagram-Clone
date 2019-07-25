@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http  import HttpResponse,HttpResponseRedirect
 from .forms import NewsLetterForm,NewImageForm,UpdateBioForm
-from .models import Image,Location,tags,NewsLetterRecipients
+from .models import Image,Location,tags,NewsLetterRecipients,Profile
 
 # Function to display all Images
 tags = tags.objects.all()
@@ -19,6 +19,14 @@ def index(request):
     else:
         form = NewsLetterForm()
     return render(request, 'index', {"location":location,"tags":tags,"images":images,"letterForm":form})
+
+#Function to allow searching of users by their username
+def search_users(request):
+    if 'user' in request.GET and request.GET["user"]:
+        search_term = request.GET.get("user")
+        searched_users = Profile.search_users(search_term)
+        return render(request, 'search.html', {"profiles":searched_users,"user":search_term})
+
 
 def new_image(request):
     current_user=request.user
