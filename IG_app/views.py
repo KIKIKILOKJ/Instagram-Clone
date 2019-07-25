@@ -29,6 +29,17 @@ def search_users(request):
     else:
         message="You have not searched for anyone"
         return render(request, 'search.html', {"message":message})
+    
+def search_image(request):
+    if 'image' in request.GET and request.GET["image"]:
+        search_term = request.GET.get("image")
+        searched_images = Image.search_image(search_term)
+        return render(request, 'search.html', {"pictures": searched_images})
+
+    else:
+        message = "You haven't searched for any image"
+        return render(request, 'search.html', {"message": message})
+
 
 def new_image(request):
     current_user=request.user
