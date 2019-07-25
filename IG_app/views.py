@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http  import HttpResponse,HttpResponseRedirect
-from .forms import NewsLetterForm
+from .forms import NewsLetterForm,NewImageForm
 from .models import Image,Location,tags,NewsLetterRecipients
 
 # Function to display all Images
