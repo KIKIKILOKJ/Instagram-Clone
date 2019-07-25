@@ -10,4 +10,8 @@ class Image(models.Model):
     likes=models.IntegerField(default=0)
     comments=models.TextField()
     
+    def __str__(self):
+        return self.name
     
+    def save_image(self):
+        self.save()
