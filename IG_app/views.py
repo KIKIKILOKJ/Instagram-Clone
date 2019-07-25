@@ -26,7 +26,9 @@ def search_users(request):
         search_term = request.GET.get("user")
         searched_users = Profile.search_users(search_term)
         return render(request, 'search.html', {"profiles":searched_users,"user":search_term})
-
+    else:
+        message="You have not searched for anyone"
+        return render(request, 'search.html', {"message":message})
 
 def new_image(request):
     current_user=request.user
@@ -55,3 +57,9 @@ def edit_profile(request):
     else:
         form = UpdateBioForm()
     return render(request, 'edit_profile.html', {"form": form})
+
+def personal_profile_page(request,username=None):
+    if not username:
+        username = request.user.username
+        images=Image.objects.filter(user_id=username)
+        return render (request, 'user.html', {'images':images, 'username': username})
