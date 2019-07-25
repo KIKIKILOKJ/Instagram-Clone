@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http  import HttpResponse,HttpResponseRedirect
 from .forms import NewsLetterForm,NewImageForm,UpdateBioForm
 from .models import Image,Location,tags,NewsLetterRecipients,Profile
+from django.contrib.auth.models import User
 
 # Function to display all Images
 tags = tags.objects.all()
@@ -69,6 +70,13 @@ def edit_profile(request):
         form = UpdateBioForm()
     return render(request, 'edit_profile.html', {"form": form})
 
+def person_profile_page(request,username=None):
+    if not username:
+        username = request.user.username
+        images=Image.objects.filter(user_id=username)
+        profile=Profile.objects.get(user=user)
+        return render (request, 'user.html', {'images':images, 'username': username,"profile":profile})
+
 def my_profile(request,username=None):
     if not username:
         username = request.user.username
@@ -76,9 +84,3 @@ def my_profile(request,username=None):
 
         return render(request, 'profile.html')
                 #locals())
-
-def personal_profile_page(request,username=None):
-    if not username:
-        username = request.user.username
-        images=Image.objects.filter(user_id=username)
-        return render (request, 'user.html', {'images':images, 'username': username})
