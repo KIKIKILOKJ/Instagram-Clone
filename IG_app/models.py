@@ -5,7 +5,14 @@ from django.contrib.auth.models import User
 class tags(models.Model):
     name=models.CharField(max_length=20)
     
-   
+    def __str__(self):
+        return self.name()
+    
+    def save_tags(self):
+        self.save()
+        
+    def delete_tags(self):
+        self.delete()
 
 class Image(models.Model):
     image=models.ImageField(upload_to='/picture',)
