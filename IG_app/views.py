@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http  import HttpResponse,HttpResponseRedirect
-from .forms import NewsLetterForm,NewImageForm
+from .forms import NewsLetterForm,NewImageForm,UpdateBioForm
 from .models import Image,Location,tags,NewsLetterRecipients
 
 # Function to display all Images
@@ -33,3 +33,17 @@ def new_image(request):
     else:
         form = NewImageForm()
     return render(request, 'new_image.html', {"form": form})
+
+def edit_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = UpdateBioForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.user = current_user
+            image.save()
+        return redirect('index')
+
+    else:
+        form = UpdateBioForm()
+    return render(request, 'edit_profile.html', {"form": form})
