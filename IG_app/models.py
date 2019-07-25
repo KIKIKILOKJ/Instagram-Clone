@@ -48,3 +48,11 @@ class Profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE,blank=True,related_name="profile")
     following=models.ManyToManyField(User,related_name="following",blank=True)
     followers=models.ManyToManyField(User,related_name="followers",blank=True)
+    
+    def save_profile(self):
+        self.save()
+        
+    def delete_profile(self):
+        self.delete()
+        
+   
