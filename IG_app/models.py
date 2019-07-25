@@ -41,6 +41,12 @@ class Image(models.Model):
     
     def save_image(self):
         self.save()
+    
+    def delete_image(self):
+        self.delete()
+        
+    def update_caption(self):
+        self.update()
         
 class Profile(models.Model):
     bio=models.TextField(max_length=100,null=True,blank=True,default="bio")
