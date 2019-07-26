@@ -1,5 +1,5 @@
 from django import forms
-from .models import Image,Profile
+from .models import Image,Profile,Review
 class NewsLetterForm(forms.Form):
     your_name =forms.CharField(label='First Name')
     email = forms.EmailField(label='Email')

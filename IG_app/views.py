@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http  import HttpResponse,HttpResponseRedirect
-from .forms import NewsLetterForm,NewImageForm,UpdateBioForm
-from .models import Image,Location,tags,NewsLetterRecipients,Profile
+from .forms import NewsLetterForm,NewImageForm,UpdateBioForm,ReviewForm
+from .models import Image,Location,tags,NewsLetterRecipients,Profile,Review
 from django.contrib.auth.models import User
 
 # Function to display all Images
