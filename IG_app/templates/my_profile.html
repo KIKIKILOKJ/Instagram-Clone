@@ -39,6 +39,14 @@
         </a>
       </li>
     </ul>
+    <div class="card">
+    {% for image in images %}
+        <a href="{% url 'image' image.id %}"><img src="{{image.image.url}}" class="img-fluid" id="eachimage"></a>
+        <p>Caption : {{ image.description}}</p>
+        <p>Posted by : {{ image.user}}</p>
+    </div>
+    {% endfor %}
+
 </div>
 
 {% endblock %}
