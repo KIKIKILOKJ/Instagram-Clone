@@ -5,6 +5,10 @@
 
 <div class="container">
     {% for image in images %}
+    <a href="{% url 'image' image.id %}"><img src="{{image.image.url}}" data-target="#imageModal{{image.id}}" data-toggle="modal" alt="" class="img-fluid" id="eachimage"></a>
+    <p> Caption : {{ image.description}}</p>
+    <p>Posted by : {{ image.user}}</p>
     {% endfor %}
+
 </div>
 {% endblock %}
