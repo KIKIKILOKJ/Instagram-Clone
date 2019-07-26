@@ -27,7 +27,7 @@
     <p class="card-text">Posted by {{image.user}}</p>
 
     <div class="card-header">
-        <h5 style="font-family: 'Oswald', sans-serif;">Image Comments</h5>
+        <h5>Image Comments</h5>
     </div>
 
 
@@ -37,6 +37,14 @@
         <p> {{ comment }}</p>
         {% endfor%}
    </div>
+</div>
+
+<div class="container">
+    <h3> Add your comment</h3>
+    <form action=""  method="post">
+    {% csrf_token%} {% bootstrap_form form %}
+    <input type="submit" class="btn btn-primary" value="Post">
+  </form>
 </div>
 
 {% endblock %}
