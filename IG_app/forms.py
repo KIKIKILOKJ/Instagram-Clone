@@ -13,3 +13,9 @@ class UpdateBioForm(forms.ModelForm):
     class meta:
         model=Profile
         exclude=['user','followers','following']
+        
+class ReviewForm(forms.ModelForm):
+    class Meta:
+
+        model = Review
+        fields = ('comment',)
