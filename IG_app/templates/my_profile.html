@@ -22,6 +22,23 @@
                 <span>{{ user_object.profile.bio }}</span>
         </div>
     </div>
+    <ul class="nav" id="my" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link active" href="#posts" data-toggle="tab" role="tab" aria-controls="posts" aria-selected="true">
+            Posts
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#saved" data-toggle="tab" role="tab" aria-controls="saved" aria-selected="false">
+            Saved
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#liked" data-toggle="tab" role="tab" aria-controls="liked" aria-selected="false">
+            Liked
+        </a>
+      </li>
+    </ul>
 </div>
 
 {% endblock %}
