@@ -41,6 +41,12 @@ def search_image(request):
         message = "You haven't searched for any image"
         return render(request, 'search.html', {"message": message})
 
+def image(request, id):
+    image = Image.objects.get(pk = id)
+    current_user = request.user
+    comments = Review.get_comment(Review, id)
+
+
 
 def new_image(request):
     current_user=request.user
