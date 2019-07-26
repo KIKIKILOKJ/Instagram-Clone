@@ -27,7 +27,7 @@ class Location(models.Model):
         self.delete()
 
 class Image(models.Model):
-    image=models.ImageField(upload_to='/picture',)
+    image=models.ImageField(upload_to='picture/',)
     name=models.CharField(max_length=40)
     caption=models.CharField(max_length=25)
     profile=models.ForeignKey(User,on_delete=models.CASCADE,related_name="images",blank=True)

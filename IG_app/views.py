@@ -16,10 +16,10 @@ def index(request):
             email = form.cleaned_data['email']
             recipient = NewsLetterRecipients(name = name,email =email)
             recipient.save()
-            HttpResponseRedirect('index')
+            HttpResponseRedirect('index.html')
     else:
         form = NewsLetterForm()
-    return render(request, 'index', {"location":location,"tags":tags,"images":images,"letterForm":form})
+    return render(request, 'index.html', {"location":location,"tags":tags,"images":images,"letterForm":form})
 
 #Function to allow searching of users by their username
 def search_users(request):
@@ -50,7 +50,7 @@ def new_image(request):
             image = form.save(commit=False)
             image.user = current_user
             image.save()
-        return redirect('index')
+        return redirect('index.html')
 
     else:
         form = NewImageForm()
