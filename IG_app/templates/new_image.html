@@ -25,9 +25,18 @@
       <br>
       {{image.caption}}</p>
     <p class="card-text">Posted by {{image.user}}</p>
-</div>
+
+    <div class="card-header">
+        <h5 style="font-family: 'Oswald', sans-serif;">Image Comments</h5>
+    </div>
 
 
+    <div class="card-body text-primary">
+        <p>{{image.comments}}</p>
+        {% for comment in comments %}
+        <p> {{ comment }}</p>
+        {% endfor%}
+   </div>
 </div>
 
 {% endblock %}
