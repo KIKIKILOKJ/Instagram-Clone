@@ -1,4 +1,4 @@
-{% extends 'all-news/base.html'%}
+{% extends 'base.html'%}
 {% block content %}
 <div class="container">
     <div class="row">
@@ -8,5 +8,17 @@
             <h2> There are no profiles available. {{message}} Please try again.</h2>
         {% endif %}
     <div>
+    <h2> Found Profiles:</h2>
+    {% for profile in profiles %}
+    <p><a href="{% url 'person_profile_page' profile_user_id %}"> {{profile.user.username}} </a></p>
+    {% endfor %}
+
+    <div class="row">
+        <div class="card">
+            {% for image in images %}
+                <img src="{{image.image.url}}" data-target="#imageModal{{image.id}}" data-toggle="modal" alt="" class="img-fluid" id="image">
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}
