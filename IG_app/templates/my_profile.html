@@ -2,3 +2,20 @@
 {% load bootstrap3 %}
 
 {% block content %}
+<div class="row">
+    <div class="col-sm-4">
+        <img src="{{username.profile.profilepic.url}}" width="152" height="152" class="rounded-circle border userimage">
+    </div>
+    <div class="col-sm-8">
+        <div style="margin-bottom: 30px;">
+            <h3>{{username.username}}</h3>
+            <a href="{% url 'edit' %}">
+            <button class="edit">
+                <span class="edit_text">Edit Profile</span>
+            </button>
+            </a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
