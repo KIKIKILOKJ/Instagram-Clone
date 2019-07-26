@@ -124,3 +124,17 @@ class NewsLetterRecipients(models.Model):
     name = models.CharField(max_length = 30)
     email = models.EmailField()
     
+class Review(models.Model):
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='user')
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name="review")
+    comment = models.TextField()
+
+    def save_comment(self):
+        self.save()
+
+    def get_comment(self, id):
+        comments = Review.objects.filter(image_id =id)
+        return comments
+
+    def __str__(self):
+        return self.comment
