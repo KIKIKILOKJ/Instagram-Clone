@@ -1,40 +1,34 @@
 <link href="https://fonts.googleapis.com/css?family=Jacques+Francois+Shadow|Shadows+Into+Light&display=swap" rel="stylesheet">
-<nav class="navbar navbar-inverse">
+<nav class="navbar bg-light">
     <div class="container-fluid">
         <div class="navbar-header">
             <a class="navbar-brand" href="{% url 'index.html' %}">INSTAGRAM</a>
         </div>
+
+        
         <div class="col-sm-6 col-md-6">
         {% if user.is_authenticated %}
-        <li>
-            <a href="{%url 'edit_profile'%}">Update Profile</a>
-        </li>
-
-        <li>
-            <a href="{% url 'person_profile_page' user.id %}">My Profile</a>
-        </li>
+        <ul>
             <li>
-                <a href="{% url 'new_image'%}">Uplaod</a>
+                <a href="{%url 'edit_profile'%}">Update Profile</a>
             </li>
-        
-        <li>
-            <a href="/accounts/password/change">Change Password</a>
-        </li>
 
-        <li>
-            <a href="/logout">Logout</a>
-        </li>
+            <li>
+                <a href="{% url 'person_profile_page' user.id %}">My Profile</a>
+            </li>
+                <li>
+                    <a href="{% url 'new_image'%}">Uplaod</a>
+                </li>
+            
+            <li>
+                <a href="/accounts/password/change">Change Password</a>
+            </li>
 
-        <li>
-            <a href="/accounts/login">Login</a>
-        </li>
-
-        <li>
-            <a href="/accounts/register">Sign Up</a>
-        </li>
-    
-        {% endif %}
-
+            <li>
+                <a href="/logout">Logout</a>
+            </li>
+        </ul>
+        </div>
         <div class="navbar-right">
 
             <form class="navbar-form" role="search" action="{% url 'search' %}">
@@ -48,6 +42,18 @@
 
             </form>
         </div>
+        {% else %}
+        <div class="navbar-right">
+        <ul>
+            <li>
+                <a class='btn btn-default' href="/accounts/login">Login</a>
+            </li>
+            <br>
+            <li>
+                <a class='btn btn-default' href="/accounts/register">Sign Up</a>
+            </li>
+        </div>
+        {% endif %}
     
     </div>
 </nav>
