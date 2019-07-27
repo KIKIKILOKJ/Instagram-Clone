@@ -1,0 +1,39 @@
+{% extends "registration/base.html"%} 
+{% load bootstrap %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Have an account already?</h5>
+                    <h2 style="color:grey;font-size:10px;">By signing up, you agree to our Terms, Data Policy and Cookies Policy.</h2>
+                    <a href="/accounts/login" class="btn btn-primary">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            {% if form.errors %}
+            <p> Some Information Might be Incorrect </p>
+            {% endif %}
+            <div class="card">
+                <div class="card-header text-center">
+                    <h1>INSTAGRAM</h1>
+                    <h3 class="text-center">Sign up to see photos posted by other users.</h3>
+                </div>
+                <div class="card-body text-primary">
+
+                    <form action="/accounts/register/" method="post">
+                        {% csrf_token %} {% bootstrap_form form %}
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary btn-sm" value="Sign Up">
+                        </div>
+                        <input type="hidden" name="next" value="{{next}}">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
