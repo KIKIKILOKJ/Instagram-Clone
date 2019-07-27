@@ -73,7 +73,7 @@ def new_image(request):
 
     else:
         form = NewImageForm()
-    return render(request, 'new_image.html', {"form": form})
+    return render(request, 'registration/new_image.html', {"form": form})
 
 def edit_profile(request):
     current_user = request.user
