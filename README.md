@@ -14,7 +14,7 @@ users can view photos uploaded by other users in the home page of app.
 4. [python virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b)
 ### Clone the Repo
 Run the following command on the terminal:
-git clone https://github.com/KIKIKILOKJ/Instagram_Clone.git && cd Instagram_Clone
+git clone https://github.com/KIKIKILOKJ/Instagram-Clone.git && cd Instagram_Clone
 ### Activate virtual environment
 Activate virtual environment using python3.6 as default handler
 bash
