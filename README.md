@@ -57,11 +57,11 @@ bash
 
 ### Run the app
 bash
-python3.6 manage.py runserver
-Open terminal on localhost:8000
-Testing the Application
+* python3.6 manage.py runserver
+* Open terminal on localhost:8000
+* Testing the Application
 To run the tests for the class files:
-   $ python3.6 manage.py test
+   * $ python3.6 manage.py test
 
 ## Technologies used
    - Python 3.6
