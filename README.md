@@ -61,9 +61,6 @@ Testing the Application
 To run the tests for the class files:
    $ python3.6 manage.py test
 
-## Known bugs
-Like and Follow functionality do not work
-
 ## Technologies used
    - Python 3.6
    - HTML
