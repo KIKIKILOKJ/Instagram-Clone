@@ -75,7 +75,7 @@ def new_image(request):
 
     else:
         form = NewImageForm()
-    return render(request, 'registration/new_image.html', {"form": form})
+    return render(request, 'new_image.html', {"form": form})
 
 @login_required(login_url='/accounts/login/')
 def edit_profile(request):
@@ -103,7 +103,7 @@ def person_profile_page(request,username=None):
 def my_profile(request,username=None):
     if not username:
         username = request.user.username
-        images = Image.objects.filter(user_id=username)
+    images = Image.objects.filter(id=username)
 
-        return render(request, 'profile.html')
+    return render(request, 'my_profile.html', {'images':images, 'username': username})
                 #locals())
