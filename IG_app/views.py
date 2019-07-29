@@ -96,9 +96,8 @@ def edit_profile(request):
 def person_profile_page(request,username=None):
     if not username:
         username = request.user.username
-        images=Image.objects.filter(user_id=username)
-        profile=Profile.objects.get(user=user)
-        return render (request, 'user.html', {'images':images, 'username': username,"profile":profile})
+    images=Image.objects.filter(profile_id=username)
+    return render (request, 'user.html', {'images':images, 'username': username})
 
 @login_required(login_url='/accounts/login/')
 def my_profile(request,username=None):
