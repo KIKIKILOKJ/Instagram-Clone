@@ -23,7 +23,8 @@ Run the following command on the terminal:
 ### Activate virtual environment
 Activate virtual environment using python3.6 as default handler
 bash
-virtualenv -p /usr/bin/python3.6 venv && source venv/bin/activate
+* virtualenv -p /usr/bin/python3.6 venv 
+* source venv/bin/activate
 
 ### Install dependancies
 Install dependancies that will create an environment for the app to run
