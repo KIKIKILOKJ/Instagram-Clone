@@ -6,13 +6,13 @@ import datetime as dt
 class ImageTestClass(TestCase):
 
     def setUp(self):
-        self.user= User(username='hello',email='hello@gmail.com', password='hello123')
+        self.user= User(username='',email='', password='')
         self.user.save()
 
-        self.profile=Profiles(images='/posts',bio='kenya love',user=self.user)
+        self.profile=Profiles(images='',bio='',user=self.user)
         self.profile.save()
         
-        self.image = Images(image='posts/',caption='testing2',pub_date='28/07/2019',profile=self.user,posted=auto_now())
+        self.image = Images(image='',caption='',pub_date='',profile=self.user())
         self.image.save_image()
     
     def test_instance(self):
@@ -25,9 +25,8 @@ class ImageTestClass(TestCase):
 
     def test_update_caption(self):
         self.image.save_image()
-        kwargs={'image':'/posts','caption':'dont stop me now'}
-        Image.update_caption(self.image.id,**kwargs)
-        self.assertEqual("dont stop me now",self.image.caption)
+        Image.update_caption(self.image.id)
+        self.assertEqual("",self.image.caption)
 
 
     def test_delete_image(self):
@@ -46,10 +45,10 @@ class ImageTestClass(TestCase):
 
 class ProfileTestClass(TestCase):
     def setup (self):
-        self.user= User(username='hello',email='hello@gmail.com', password='hello123')
+        self.user= User(username='',email='', password='')
         self.user.save()
 
-        self.profile=Profiles(images='/posts',bio='kenya love',user=self.user)
+        self.profile=Profiles(images='',bio='',user=self.user)
         self.profile.save()
 
     def test_instance(self):
@@ -74,13 +73,13 @@ class CommentsTestClass(TestCase):
 
 
     def setup (self):
-        self.user= User(username='hello',email='hello@gmail.com', password='hello123')
+        self.user= User(username='',email='', password='')
         self.user.save()
 
-        self.profile=Profiles(images='/posts',bio='kenya love',user=self.user)
+        self.profile=Profiles(images='',bio='',user=self.user)
         self.profile.save()
 
-        self.comment=Comments(comment='jeepers creepers',image=self.image, user=self.profile,posted=auto_now())
+        self.comment=Comments(comment='',image=self.image, user=self.profile())
 
     def test_instance(self):
         self.assertTrue(isinstance(self.comment,Comments))
