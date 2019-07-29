@@ -1,30 +1,32 @@
 {% extends 'base.html' %} 
 
 {% block content %}
-<div class="container">
-    <div class="row text-center">
-        <div class="col-md-12">
-            {% for image in images %}
-            <div class="images">
-                <div class="card text-center">
-                    <div class="card-header">
-                        <a href="{% url 'profile' username=image.profile.username %}"></a>
-                    </div>
-                    
-                        <img src="{{image.image.url}}" class=" img img-responsive img-thumbnail" style="height: 600px; margin-bottom: 10px; width:750px; padding: 40px;box-shadow:10px 10px 10px -6px rgba(136,136,136,0.88);" data-toggle="modal" data-target="#{{image.id}}">
-                        <p class="card-text"> Caption ~ {{image.caption|safe}} </p>
-                        <ul class=" list-inline home-text">
-                            <li class="list-inline-item">
-                                Like <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
-                            </li>
-                            <li class="list-inline-item">
-                                Comment <a href="{% url 'singleImage' image_id=image.id %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a>
-                            </li>
-                        </ul>
+<div class="back">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                {% for image in images %}
+                <div class="images">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <a href="{% url 'profile' username=image.profile.username %}"></a>
+                        </div>
+                        
+                            <img src="{{image.image.url}}" class=" img img-responsive img-thumbnail" style="height: 600px; margin-bottom: 10px; width:750px; padding: 40px;box-shadow:10px 10px 10px -6px rgba(136,136,136,0.88);" data-toggle="modal" data-target="#{{image.id}}">
+                            <p class="card-text"> Caption ~ {{image.caption|safe}} </p>
+                            <ul class=" list-inline home-text">
+                                <li class="list-inline-item">
+                                    Like <i class="fa fa-heart-o fa-2x" aria-hidden="true"></i>
+                                </li>
+                                <li class="list-inline-item">
+                                    Comment <a href="{% url 'singleImage' image_id=image.id %}"><i class="fa fa-comment-o fa-2x" aria-hidden="true"></i></a>
+                                </li>
+                            </ul>
+                </div>
+                {% empty %}
+                <h2>No images Available.Upload some</h2>
+                {% endfor %}
             </div>
-            {% empty %}
-            <h2>No images Available.Upload some</h2>
-            {% endfor %}
         </div>
     </div>
 </div>
