@@ -17,7 +17,8 @@ users can view photos uploaded by other users in the home page of app.
 
 ### Clone the Repo
 Run the following command on the terminal:
-git clone https://github.com/KIKIKILOKJ/Instagram-Clone.git && cd Instagram_Clone
+* git clone https://github.com/KIKIKILOKJ/Instagram-Clone.git 
+* cd Instagram_Clone
 
 ### Activate virtual environment
 Activate virtual environment using python3.6 as default handler
@@ -31,7 +32,7 @@ pip3 install -r requirements.txt
 ### Create the Database
 bash
 psql
-CREATE DATABASE insta;
+CREATE DATABASE instagram;
 
 ### .env file
 Create .env file and paste paste the following filling where appropriate:
