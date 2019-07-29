@@ -3,9 +3,11 @@ from django.http  import HttpResponse,HttpResponseRedirect
 from .forms import NewsLetterForm,NewImageForm,UpdateBioForm,ReviewForm
 from .models import Image,Location,tags,NewsLetterRecipients,Profile,Review
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 # Function to display all Images
 tags = tags.objects.all()
+@login_required(login_url='/accounts/login/')
 def index(request):
     images=Image.objects.all()
     location=Location.objects.all()
@@ -56,11 +58,11 @@ def image(request, id):
             review.save()
         else:
             form = ReviewForm()
-            
+
     return render(request, 'image.html', {"image": image,'form':ReviewForm,'comments':comments,})
 
 
-
+@login_required(login_url='/accounts/login/')
 def new_image(request):
     current_user=request.user
     if request.method == 'POST':
@@ -75,6 +77,7 @@ def new_image(request):
         form = NewImageForm()
     return render(request, 'registration/new_image.html', {"form": form})
 
+@login_required(login_url='/accounts/login/')
 def edit_profile(request):
     current_user = request.user
     if request.method == 'POST':
@@ -89,6 +92,7 @@ def edit_profile(request):
         form = UpdateBioForm()
     return render(request, 'edit_profile.html', {"form": form})
 
+@login_required(login_url='/accounts/login/')
 def person_profile_page(request,username=None):
     if not username:
         username = request.user.username
@@ -96,6 +100,7 @@ def person_profile_page(request,username=None):
         profile=Profile.objects.get(user=user)
         return render (request, 'user.html', {'images':images, 'username': username,"profile":profile})
 
+@login_required(login_url='/accounts/login/')
 def my_profile(request,username=None):
     if not username:
         username = request.user.username

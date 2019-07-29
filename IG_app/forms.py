@@ -9,7 +9,7 @@ class NewImageForm(forms.Form):
         model=Image
         exclude=['user','likes']
         
-class UpdateBioForm(forms.ModelForm):
+class UpdateBioForm(forms.Form):
     class meta:
         model=Profile
         exclude=['user','followers','following']
