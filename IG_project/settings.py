@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sgm6w$mpby)-+5!kynrg_$#1p_1pf0r_bvsr4y%rft*qy@p)s_'
+# SECRET_KEY = 'sgm6w$mpby)-+5!kynrg_$#1p_1pf0r_bvsr4y%rft*qy@p)s_'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -82,7 +82,7 @@ WSGI_APPLICATION = 'IG_project.wsgi.application'
 
 MODE=config("MODE", default="dev")
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config('DEBUG', default=False)
 # development
 if config('MODE')=="dev":
     DATABASES = {
