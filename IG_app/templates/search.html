@@ -1,23 +1,30 @@
-{% extends 'base.html'%}
+{% extends 'base.html' %}
+
 {% block content %}
 <div class="container">
     <div class="row">
-        {% if profiles%}
-            <h2>Available profiles: {{message}}</h2>
-        {% else %}
-            <h2> There are no profiles available. {{message}} Please try again.</h2>
-        {% endif %}
-    <div>
-    <h2> Found Profiles:</h2>
-    {% for profile in profiles %}
-    <p><a href="{% url 'person_profile_page' profile_user_id %}"> {{profile.user.username}} </a></p>
-    {% endfor %}
-
-    <div class="row">
-        <div class="card">
-            {% for image in images %}
-                <img src="{{image.image.url}}" data-target="#imageModal{{image.id}}" data-toggle="modal" alt="" class="img-fluid" id="image">
-            {% endfor %}
+        <div class="col-md-12 text-center">
+            <h2>Search results for {{message}}</h2>
         </div>
     </div>
+    <div class="row">
+        {% if profiles %}
+            {% for profile in profiles %}
+            <div class="col-md-3">
+                {% if profile.image %}
+                <img src="{{profile.image.cdn_url}}" alt="profile-photo">
+                {% else %}
+                <img src="/static/img" alt="avatar">
+                {% endif %}
+                <p class="username">{{profile.user.username}} </p>
+                <p><a class="btn btn-primary" href="{% url 'profile' username=profile.user.username %}">View Profile</a></p>
+            </div>
+            {% endfor %}
+        {% else %} 
+            <div class="col-md-12 text-center">
+                <h4>No results for {{message}} </h4>
+            </div>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

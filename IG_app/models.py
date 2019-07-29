@@ -1,140 +1,67 @@
 from django.db import models
 from django.contrib.auth.models import User
+from tinymce.models import HTMLField
 
-# Create your models here.
-class tags(models.Model):
-    name=models.CharField(max_length=20)
-    
-    def __str__(self):
-        return self.name()
-    
-    def save_tags(self):
-        self.save()
-        
-    def delete_tags(self):
-        self.delete()
 
-class Location(models.Model):
-    name=models.CharField(max_length=40)
+class Profiles(models.Model):
+    image = models.ImageField(blank=True, )
+    bio = models.CharField(max_length=100)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     
-    def __str__(self):
-        return self.name
-    
-    def save_location(self):
-        self.save()
-        
-    def delete_location(self):
-        self.delete()
-
-class Image(models.Model):
-    image=models.ImageField(upload_to='picture/',)
-    name=models.CharField(max_length=40)
-    caption=models.CharField(max_length=25)
-    profile=models.ForeignKey(User,on_delete=models.CASCADE,related_name="images",blank=True)
-    likes=models.IntegerField(default=0)
-    comments=models.TextField()
-    tags=models.ManyToManyField(tags)
-    location=models.ForeignKey(Location,null=True)
-
-    def __str__(self):
-        return self.name
-
-    def save_image(self):
-        self.save()
-
-    def delete_image(self):
-        self.delete()
-
-    def update_caption(self):
-        self.update()
-        
-    @classmethod
-    def search_image(cls,search_term):
-        images=cls.objects.filter(name__icontains=search_term)
-        return images
-    
-        
-    @classmethod
-    def update_image(cls,id):
-        images=cls.objects.filter(id=id).update(id=id)
-        return images
-    
-    @classmethod
-    def get_image_by_id(cls,id):
-        images = cls.objects.get(pk=id)
-        return images
-    
-    @classmethod
-    def filter_by_tag(cls,tags):
-        images=cls.objects.filter(tags=tags)
-        return images
-    
-    @classmethod
-    def filter_by_location(cls,location):
-        images=cls.objects.filter(location=location)
-        return images
-    
-    @classmethod
-    def delete_image_by_id(cls,id):
-        images=cls.object.filter(pk=id)
-        images.delete()
-        
-    
-
-class Profile(models.Model):
-    bio=models.TextField(max_length=100,null=True,blank=True,default="bio")
-    profilepic=models.ImageField(upload_to='picture/',null=True,blank=True)
-    user=models.OneToOneField(User,on_delete=models.CASCADE,blank=True,related_name="profile")
-    following=models.ManyToManyField(User,related_name="following",blank=True)
-    followers=models.ManyToManyField(User,related_name="followers",blank=True)
-
     def save_profile(self):
         self.save()
-
-    def delete_profile(self):
-        self.delete()
-
-    def follow_user(self,follower):
-        return self.following.add(follower)
-
-    def is_following(self,check_user):
-        return check_user in self.following.all()
-
-    def get_number_of_following(self):
-            if self.following.count():
-                return self.following.count()
-            else:
-                return 0
-
-    def get_number_of_followers(self):
-        if self.followers.count():
-            return self.followers.count()
-        else:
-            return 0
-
-    def unfollow_user(self,to_unfollow):
-        return self.following.remove(to_unfollow)
-
+        
     @classmethod
-    def search_users(cls,search_term):
-        profiles=cls.objects.filter(user__username__icontains=search_term)
-        return profiles
+    def get_profile_by_name(cls, name):
+        profile = Profiles.objects.filter(user__username__icontains = name)
+        return profile
     
-class NewsLetterRecipients(models.Model):
-    name = models.CharField(max_length = 30)
-    email = models.EmailField()
+    @classmethod
+    def filter_profile_by_id(cls, id):
+        profile = Profiles.objects.filter(user = id).first()
+        return profile
     
-class Review(models.Model):
-    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, related_name='user')
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, related_name="review")
-    comment = models.TextField()
-
+    @classmethod
+    def get_profile_by_id(cls,id):
+        profile = Profiles.objects.get(user = id)
+        return profile
+    
+class Images(models.Model):
+    image = models.ImageField(blank=True, )
+    caption = models.CharField(max_length=100)
+    posted = models.DateTimeField(auto_now=True)
+    profile = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    class Meta:
+        ordering = ('-posted',)
+        
+    def save_image(self):
+        self.save()
+      
+    @classmethod  
+    def get_image_by_id(cls,id):
+        image = Images.objects.get(pk=id)
+        return image
+    
+    @classmethod
+    def get_profile_images(cls,profile):
+        images = Images.objects.filter(profile__pk= profile)
+        return images
+    
+    @classmethod
+    def get_all_images(cls):
+        images = Images.objects.all()
+        return images
+    
+class Comments(models.Model):
+    comment = models.CharField(max_length=100)
+    posted = models.DateTimeField(auto_now=True)
+    image = models.ForeignKey(Images,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     def save_comment(self):
         self.save()
-
-    def get_comment(self, id):
-        comments = Review.objects.filter(image_id =id)
-        return comments
-
-    def __str__(self):
-        return self.comment
+        
+    @classmethod
+    def get_comment_by_image(cls,id):
+        comment = Comments.objects.filter(image__pk = id)
+        return comment

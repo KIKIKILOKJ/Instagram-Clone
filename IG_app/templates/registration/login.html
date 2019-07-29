@@ -1,5 +1,5 @@
 {% extends "registration/base.html"%}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 {% block content %}
 
 <div class="container">
@@ -16,7 +16,8 @@
             </div>
             <div class="card-body text-primary">
                 <form action="/accounts/login/" method="post">
-                {% csrf_token %} {% bootstrap_form form%}
+                {% csrf_token %}
+                {% bootstrap_form form%}
             <div class="form-group">
                 <input type="submit" class="btn btn-primary btn-sm" value="Login">
                 <input type="hidden" name="next" value="{{next}}">
@@ -26,7 +27,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body text-center">
-                    <a href="/accounts/register" class="btn btn-primary">Sign Up</a>
+                    <a href="/accounts/register" class="btn btn-secondary">Sign Up</a>
                 </div>
             </div>
         </div>

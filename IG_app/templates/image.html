@@ -1,50 +1,59 @@
+
 {% extends 'base.html' %}
-{% load bootstrap3 %}
+{% load bootstrap4 %}
+
 {% block content %}
 <div class="container">
-    <h1>INSTAGRAM</h1>
-</div>
-<div class="container">
-    <img class="card-img-top" src="{{image.image.url}}" alt="Card image cap" class="img-fluid" size="100px200">
-    <div class="card-body">
-        <button class="btn btn-lg btn-danger">Like This Image</button>
-        <a href="#" onClick="document.getElementById('likebutton').submit()">Like This Post</a> {{image.likes}}
+    <div class="row">
+        <div class="col-md-7">
+                <p><a href="{% url 'profile' username=image.profile.username %}"></a>
+                </p>
+                <div class="col-md-5">
+                    <img src="{{image.image.url}}" data-toggle="modal" data-target="#{{image.id}}">
+                </div>
+                <ul>
+
+                </ul>
+                <ul>
+                    <li>
+                      <a href="{% url 'profile' %}"></a>
+                    </li>
+                    <li>
+                        <p>{{image.caption}} </p>
+                    </li>
+                </ul>
+                <p> {{comments|length}} comments </p>
+                <hr>
+                <p>Comments</p>
+                <div class="comments">
+                {% for comment in comments %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul>
+                                <li>
+                                    <a href="{% url 'profile' username=comment.user.username %}"></a>
+                                </li>
+                                <li>
+                                    <p>{{comment.comment}} </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="row">
+                        <div class="col-md-10">
+                            <h3>There are no comments</h3>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <form action="{% url 'singleImage' image_id=image.id %}" method="POST">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <input type="submit" class="btn btn-primary" value="POST">
+                </form>
+            </div>
+        </div>
     </div>
-    <form id="likebutton" method="POST" action="/posts/{{image.id}}/preference/1/">
-        {% csrf_token %}
-        <input type="hidden">
-    </form>
-
-    <h5 class="card-title"><strong>Name Of Image:</strong>
-      <br>
-      {{image.name}}</h5>
-    <p class="card-text"><strong>Location:</strong>
-      <br>
-      {{image.location}}</p>
-    <p class="card-text"><strong>Caption:</strong>
-      <br>
-      {{image.caption}}</p>
-    <p class="card-text">Posted by {{image.user}}</p>
-
-    <div class="card-header">
-        <h5>Image Comments</h5>
-    </div>
-
-
-    <div class="card-body text-primary">
-        <p>{{image.comments}}</p>
-        {% for comment in comments %}
-        <p> {{ comment }}</p>
-        {% endfor%}
-   </div>
 </div>
-
-<div class="container">
-    <h3> Add your comment</h3>
-    <form action=""  method="post">
-    {% csrf_token%} {% bootstrap_form form %}
-    <input type="submit" class="btn btn-primary" value="Post">
-  </form>
-</div>
-
 {% endblock %}

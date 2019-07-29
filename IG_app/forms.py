@@ -1,21 +1,20 @@
 from django import forms
-from .models import Image,Profile,Review
-class NewsLetterForm(forms.Form):
-    your_name =forms.CharField(label='First Name')
-    email = forms.EmailField(label='Email')
+from .models import Comments, Profiles, Images
 
-class NewImageForm(forms.Form):
-    class meta:
-        model=Image
-        exclude=['user','likes']
-        
-class UpdateBioForm(forms.Form):
-    class meta:
-        model=Profile
-        exclude=['user','followers','following']
-        
-class ReviewForm(forms.ModelForm):
+class NewImageForm(forms.ModelForm):
+    image = forms.ImageField()
+    caption = forms.CharField(max_length=100)
+    class Meta: 
+        model = Images
+        exclude = ['posted','profile']
+    
+class PostComment(forms.ModelForm):
+    class Meta: 
+        model = Comments
+        exclude = ['image','posted','user']
+
+class NewProfile(forms.ModelForm):
     class Meta:
+        models = Profiles
+        exclude = ['user',]
 
-        model = Review
-        fields = ('comment',)

@@ -1,111 +1,76 @@
-from django.shortcuts import render
-from django.http  import HttpResponse,HttpResponseRedirect
-from .forms import NewsLetterForm,NewImageForm,UpdateBioForm,ReviewForm
-from .models import Image,Location,tags,NewsLetterRecipients,Profile,Review
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
-from .email import send_welcome_email
+from .forms import PostComment,NewImageForm,NewProfile
+from .models import Images, Profiles, Comments 
 
-# Function to display all Images
-tags = tags.objects.all()
-@login_required(login_url='/accounts/login/')
+# Create your views here.
 def index(request):
-    images=Image.objects.all()
-    location=Location.objects.all()
-    if request.method == 'POST':
-        form = NewsLetterForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['your_name']
-            email = form.cleaned_data['email']
-            recipient = NewsLetterRecipients(name = name,email =email)
-            recipient.save()
-            send_welcome_email(name,email)
-            HttpResponseRedirect('index.html')
-    else:
-        form = NewsLetterForm()
-    return render(request, 'index.html', {"location":location,"tags":tags,"images":images,"letterForm":form})
-
-#Function to allow searching of users by their username
-def search_users(request):
-    if 'user' in request.GET and request.GET["user"]:
-        search_term = request.GET.get("user")
-        searched_users = Profile.search_users(search_term)
-        return render(request, 'search.html', {"profiles":searched_users,"user":search_term})
-    else:
-        message="You have not searched for anyone"
-        return render(request, 'search.html', {"message":message})
-    
-def search_image(request):
-    if 'image' in request.GET and request.GET["image"]:
-        search_term = request.GET.get("image")
-        searched_images = Image.search_image(search_term)
-        return render(request, 'search.html', {"pictures": searched_images})
-
-    else:
-        message = "You haven't searched for any image"
-        return render(request, 'search.html', {"message": message})
-
-def image(request, id):
-    image = Image.objects.get(pk = id)
-    current_user = request.user
-    comments = Review.get_comment(Review, id)
-    if request.method == 'POST':
-        form = ReviewForm(request.POST)
-        if form.is_valid():
-            comment = form.cleaned_data['comment']
-            review = Review()
-            review.image = image
-            review.user = current_user
-            review.comment = comment
-            review.save()
-        else:
-            form = ReviewForm()
-
-    return render(request, 'image.html', {"image": image,'form':ReviewForm,'comments':comments,})
-
+    images = Images.get_all_images()
+    return render(request,'index.html',{'images':images})
 
 @login_required(login_url='/accounts/login/')
-def new_image(request):
-    current_user=request.user
-    if request.method == 'POST':
-        form = NewImageForm(request.POST, request.FILES)
-        if form.is_valid():
-            image = form.save(commit=False)
-            image.user = current_user
-            image.save()
-        return redirect('index.html')
-
-    else:
-        form = NewImageForm()
-    return render(request, 'new_image.html', {"form": form})
-
+def profile(request,username):
+    user = User.objects.get(username=username)
+    profile = Profiles.filter_profile_by_id(user.id)
+    title = f'{user.username}\'s Profile '
+    images = Images.get_profile_images(user.id)
+    return render(request, 'profile/profile.html',{'title':title,'users':user,'profile':profile,'images':images})
+    
 @login_required(login_url='/accounts/login/')
 def edit_profile(request):
     current_user = request.user
     if request.method == 'POST':
-        form = UpdateBioForm(request.POST, request.FILES)
+        form = NewProfile(request.POST, request.FILES)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.user = current_user
+            profile.save()
+            return redirect('editProfile')
+    else:
+        form = NewProfile()
+            
+    return render(request,'profile/edit_profile.html',{'form':form})
+    
+@login_required(login_url='/accounts/login/')
+def post_image(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewImageForm(request.POST,request.FILES)
         if form.is_valid():
             image = form.save(commit=False)
-            image.user = current_user
+            image.profile = current_user
             image.save()
-        return redirect('index')
-
+            return redirect('profile',username=request.user)
     else:
-        form = UpdateBioForm()
-    return render(request, 'edit_profile.html', {"form": form})
+        form = NewImageForm()
+    return render(request,'profile/new_image.html',{'form':form})
 
+def search(request):
+    if 'search' in request.GET and request.GET['search']:
+        search_term = request.GET.get('search')
+        profiles = Profiles.get_profile_by_name(search_term)
+        message = f'{search_term}'
+        
+        return render(request,'search.html',{'message':message,'profiles':profiles})
+    else:
+        message = 'Search Username'
+        return render(request,'search.html',{'message':message})
+    
 @login_required(login_url='/accounts/login/')
-def person_profile_page(request,username=None):
-    if not username:
-        username = request.user.username
-    images=Image.objects.filter(profile_id=username)
-    return render (request, 'user.html', {'images':images, 'username': username})
-
-@login_required(login_url='/accounts/login/')
-def my_profile(request,username=None):
-    if not username:
-        username = request.user.username
-    images = Image.objects.filter(id=username)
-
-    return render(request, 'my_profile.html', {'images':images, 'username': username})
-                #locals())
+def view_single_image(request,image_id):
+    image = Images.get_image_by_id(image_id)
+    comments = Comments.get_comment_by_image(image_id)
+    current_user = request.user
+    if request.method == 'POST':
+        form = PostComment(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.image = image
+            comment.user = request.user
+            comment.save()
+            return redirect('singleImage',image_id=image_id)
+    else:
+        form = PostComment()
+    return render(request, 'image.html',{'image':image,'form':form,'comments':comments})
