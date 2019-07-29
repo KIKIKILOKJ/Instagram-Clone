@@ -14,7 +14,7 @@ users can view photos uploaded by other users in the home page of app.
 4. [python virtualenv](https://gist.github.com/Geoyi/d9fab4f609e9f75941946be45000632b)
 ### Clone the Repo
 Run the following command on the terminal:
-git clone https://github.com/francismuk/instagram_clone.git && cd Instagram
+git clone https://github.com/KIKIKILOKJ/Instagram_Clone.git && cd Instagram_Clone
 ### Activate virtual environment
 Activate virtual environment using python3.6 as default handler
 bash
@@ -30,7 +30,7 @@ CREATE DATABASE insta;
 Create .env file and paste paste the following filling where appropriate:
 python
 SECRET_KEY = '<Secret_key>'
-DBNAME = 'insta'
+DBNAME = 'instagram'
 USER = '<Username>'
 PASSWORD = '<password>'
 DEBUG = True
@@ -69,7 +69,7 @@ Like and Follow functionality do not work
 |View profile       | Click on profile  | image is added         |
 |View images       |Go to index to view  | All images are shown         |
 ## Support and contact details
-Contact me on mukd3v3lop3r@gmail.com for any comments, reviews or advice.
+Contact me on petermax2004@gmail.com for any comments, reviews or advice.
 ### License
-[MIT](./License)
-Copyright (c) 2019 **FRANCIS MUKUHA**
+[MIT](LICENSE)
+Copyright (c) 2019 **PETER KINYANJUI**
