@@ -4,6 +4,7 @@ from .forms import NewsLetterForm,NewImageForm,UpdateBioForm,ReviewForm
 from .models import Image,Location,tags,NewsLetterRecipients,Profile,Review
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .email import send_welcome_email
 
 # Function to display all Images
 tags = tags.objects.all()
@@ -18,6 +19,7 @@ def index(request):
             email = form.cleaned_data['email']
             recipient = NewsLetterRecipients(name = name,email =email)
             recipient.save()
+            send_welcome_email(name,email)
             HttpResponseRedirect('index.html')
     else:
         form = NewsLetterForm()
